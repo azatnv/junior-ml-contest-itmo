@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Main</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css"> -->
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous"> -->
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main_me.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	<div class="limiter">
+		<div class="background-me" style="background-image: url('images/bg-01.jpg');">
+
+			<div class="container-fluid px-5">
+
+				<div class="row g-4 py-2 justify-content-center">
+
+					<div class="col-5 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+						<div class="row justify-content-center">
+							<div class="col-11">
+								<div class="p-3">
+									<form class="upload-container" 
+											id="upload-container" 
+											enctype="multipart/form-data"
+											method="post" 
+											action="/uploadFile">
+										<img id="upload-image" src="images/upload.svg" style="width: 3vw;">
+										<div>
+											<label for="file_upload" class="m-2">Загрузите файл (WAV):</label>
+											<input type="file" id="file_upload" name="file_upload" accept="audio/wav">
+											<span  class="m-2">или перетащите в это поле</span>
+										</div>
+										<div><button type="submit" id="bSubmit" hidden></button></div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="row py-2 justify-content-center">
+							<div class="col-10 preview" style="text-align: center;">
+								<p class="txt3">[не выбран файл для загрузки]</p>
+							</div>
+						</div>
+						<div class="row justify-content-center">
+							<div class="col-8">
+								<button onclick="bSubmit.click()" class="login100-form-btn" style="width: 100%; height: 30px;">Отправить</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-7 col-sm-8 col-md-7 col-lg-6 col-xl-6">
+						<div class="p-3 wrap-profile">
+							<div class="row justify-content-between">
+								<div class="col-8">
+									<div class="px-5 py-3" style="font-weight: bold;">
+										<h2>Профиль</h2>
+									</div>
+								</div>
+								<div class="col-2">
+									<div class="py-3" style="text-align: center;">
+										<a href="/logout"><span  style="color: #212529;; font-family: Poppins-Regular, sans-serif; font-size: larger;">Выход</span></a>
+									</div>
+								</div>
+							</div>
+
+							<div class="row px-5">
+								<div class="col-5 col-sm-4 col-md-5 col-lg-4 col-xl-3" style="text-align: center;">
+									<img src="{{user.picture}}"
+									alt="Изображение профиля" style="margin: 10px; height: 96px; width: 96px;">
+								</div>
+								<div class="col-7 col-sm-8 col-md-7 col-lg-6 col-xl-6">
+									<h4 style="margin-top: 20px;">{{user.name}}</h4>
+									<p style="margin: 10px;">{{user.email}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+
+
+				<div class="row g-4 py-2 justify-content-center">
+
+					<div class="col-5 col-sm-4 col-md-5 col-lg-4 col-xl-3">
+						<div class="p-1 wrap-list">
+
+							
+							<div class="container d-flex justify-content-center list_me">
+								<ul class="list-group mt-2">
+									{{#listFilesHTML}}
+										{{{.}}}
+									{{/listFilesHTML}}
+								</ul>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-7 col-sm-8 col-md-7 col-lg-6 col-xl-6">
+						<div class="p-3 wrap-info">
+							{{#preview}}
+							<div class="row mt-3 ms-5 d-flex justify-content-start">
+								<div class="col-12">
+									<h3>Инструкция </h3> 
+								</div>
+							</div>
+							<div class="row mt-3 ms-5 d-flex justify-content-start">
+								<div class="col-10 px-4">
+									<ol class="list-group list-group-numbered" style="width: auto;">
+										<li class="list-group-item">Загрузите или перетащите аудио файл в верхнюю часть сайта</li>
+										<li class="list-group-item">Требования к аудиозаписи:</li>
+											<ul style="width: auto;">
+												<li class="mt-1">Сделана с помощью электронного стетоскопа</li>
+												<li class="">Размер не превышает 5Мб</li>
+											</ul>
+										<li class="list-group-item">Подождите, когда система проанализирует аудиозапись, и обновите страницу</li>
+									</ol>
+								</div>
+							</div>
+							{{/preview}}
+
+
+							{{^preview}}
+								<div class="row mt-3 ms-4 d-flex justify-content-start">
+									<div class="col-4">
+										<h3>Результат</h3> 
+									</div>
+								</div>
+								<div class="row mt-5 d-flex justify-content-center">
+									<div class="col-12 text-center">
+										<h4> <u>
+											{{diagnosis}}
+										</u> </h4> 
+									</div>
+								</div>
+								<div class="row mt-3 d-flex justify-content-center">
+									<div class="col-12 text-center">
+										{{{mediaHTML}}}
+									</div>
+								</div>
+								<div class="row mt-5 ms-4 d-flex justify-content-start">
+									<div class="col-12">
+										<span class="txt3">Точность: </span> 
+										<span>
+											{{probability}}
+										</span>
+									</div>
+								</div>
+								<div class="row mt-4 ms-4 me-4 d-flex justify-content-start">
+									<div class="col-12">
+										<ul class="list-group" style="width: auto;">
+											{{{recordHTML}}}
+										</ul>
+									</div>
+								</div>
+							{{/preview}}
+						</div>
+					</div>
+
+				</div>
+
+				
+			</div>
+
+
+		</div>
+	</div>
+
+	<!-- Handle input files from user-->
+	<script>
+		var file_to_upload = null;
+		var preview = document.querySelector('.preview');
+		var inputFile = document.getElementById("file_upload");
+		inputFile.addEventListener("change", handleFiles, false);
+		function handleFiles() {
+			while(preview.firstChild) {
+				preview.removeChild(preview.firstChild);
+			}
+			var curFiles = this.files;
+			var para = document.createElement('p');
+			if(curFiles.length === 0) {
+				para.textContent = '[не выбран файл для загрузки]';
+				para.classList.add("txt3");
+				para.style.color = 'red';
+				preview.appendChild(para);
+				u_file = null;
+			} else {
+				var u_file = curFiles[0];
+				para.textContent = '[Файл:] ' + u_file.name + ' [' + returnFileSize(u_file.size) + '].';
+				para.classList.add("txt3");
+				preview.appendChild(para);
+				
+				if (u_file.size > 5242880) {
+					var log = document.createElement('p');
+					log.textContent = '[Ошибка:] Размер файла превышает 5 MB !';
+					log.classList.add("txt3");
+					log.style.color = 'red';
+					preview.append(log);
+				}
+			}
+			file_to_upload = u_file;
+		}
+		function returnFileSize(number) {
+			if(number < 1024) {
+				return number + 'bytes';
+			} else if(number > 1024 && number < 1048576) {
+				return (number/1024).toFixed(1) + 'KB';
+			} else if(number > 1048576) {
+				return (number/1048576).toFixed(1) + 'MB';
+			}
+		}
+	</script>
+
+	<!-- Submit files to server  -->
+	<script>
+		function submitToServer(event) {
+			if(file_to_upload){
+				if (file_to_upload.size > 5242880) {
+					var log = document.createElement('p');
+					log.textContent = '[Ошибка:] Размер файла превышает 5 MB !';
+					log.classList.add("txt3");
+					log.style.color = '#ffa500';
+					preview.append(log);
+					
+					event.preventDefault();
+				}
+			} else {
+				event.preventDefault();
+			}
+		}
+		const form = document.getElementById('upload-container');
+		var preview = document.querySelector('.preview');
+		form.addEventListener('submit', submitToServer);
+	</script>
+
+
+<!--===============================================================================================-->
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+	
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+	<script type="text/javascript" src="js/script_upload.js"></script>
+
+</body>
+</html>
